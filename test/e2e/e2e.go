@@ -24,6 +24,7 @@ import (
 	"github.com/onsi/ginkgo/config"
 	"github.com/onsi/gomega"
 	"k8s.io/apiserver/pkg/util/logs"
+
 	// required
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
@@ -33,6 +34,7 @@ import (
 	_ "k8s.io/ingress-nginx/test/e2e/annotations"
 	_ "k8s.io/ingress-nginx/test/e2e/defaultbackend"
 	_ "k8s.io/ingress-nginx/test/e2e/lua"
+	_ "k8s.io/ingress-nginx/test/e2e/security"
 	_ "k8s.io/ingress-nginx/test/e2e/settings"
 	_ "k8s.io/ingress-nginx/test/e2e/ssl"
 )

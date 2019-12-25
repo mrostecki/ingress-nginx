@@ -828,6 +828,15 @@ stream {
         }
         {{ end }}
 
+
+        {{ if $externalAuth.SigninURL }}
+        location {{ buildAuthSignURLLocation $location.Path $externalAuth.SigninURL }} {
+            internal;
+
+            return 302 {{ buildAuthSignURL $externalAuth.SigninURL }};
+        }
+        {{ end }}
+
         location {{ $path }} {
             {{ if not $all.DisableLua }}
             {{ if shouldConfigureLuaRestyWAF $all.Cfg.DisableLuaRestyWAF $location.LuaRestyWAF.Mode }}
@@ -954,8 +963,9 @@ stream {
             {{- end }}
             {{ end }}
 
-            {{ if $location.ExternalAuth.SigninURL }}
-            error_page 401 = {{ buildAuthSignURL $location.ExternalAuth.SigninURL }};
+            {{ if $externalAuth.SigninURL }}
+            set_escape_uri $escaped_request_uri $request_uri;
+            error_page 401 = {{ buildAuthSignURLLocation $location.Path $externalAuth.SigninURL }};
             {{ end }}
 
             {{ if $location.BasicDigestAuth.Secured }}
